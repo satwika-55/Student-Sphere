@@ -40,11 +40,15 @@ export async function register(req, res) {
         userAgent: req.headers['user-agent']
     }); 
 
-    const accessToken = jwt.sign({ id: user._id }, { sessionId: session._id }, config.JWT_SECRET, { expiresIn: '15m' });
+    const accessToken = jwt.sign(
+        { id: user._id, sessionId: session._id },
+        config.JWT_SECRET,
+        { expiresIn: '15m' },
+    );
 
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
@@ -52,6 +56,7 @@ export async function register(req, res) {
     res.status(201).json({
         message: 'User registered successfully',
         user : {
+            id: user._id,
             username: user.username,
             email: user.email,
         },
@@ -82,10 +87,14 @@ export async function login(req, res) {
         ip: req.ip,
         userAgent: req.headers['user-agent']
     });
-    const accessToken = jwt.sign({ id: user._id }, { sessionId: session._id }, config.JWT_SECRET, { expiresIn: '15m' });
+    const accessToken = jwt.sign(
+        { id: user._id, sessionId: session._id },
+        config.JWT_SECRET,
+        { expiresIn: '15m' },
+    );
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
@@ -93,6 +102,7 @@ export async function login(req, res) {
     res.status(200).json({
         message: 'User logged in successfully',
         user : {
+            id: user._id,
             username: user.username,
             email: user.email,
         },
@@ -117,6 +127,7 @@ export async function getMe(req, res) {
     res.status(200).json({
         message: 'User details fetched successfully',
         user : {
+            id: user._id,
             username: user.username,
             email: user.email,
         }
@@ -156,7 +167,7 @@ export async function refreshToken(req, res) {
 
     res.cookie('refreshToken', newRefreshToken, {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
     });
