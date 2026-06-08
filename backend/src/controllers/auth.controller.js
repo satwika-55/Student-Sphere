@@ -36,8 +36,8 @@ export async function register(req, res) {
     const session = await sessionModel.create({
         user: user._id,
         refreshTokenHash,
-        ip: req.ip,
-        userAgent: req.headers['user-agent']
+        ip: req.ip || '127.0.0.1',
+        userAgent: req.headers['user-agent'] || 'unknown'
     }); 
 
     const accessToken = jwt.sign(
@@ -84,8 +84,8 @@ export async function login(req, res) {
     const session = await sessionModel.create({
         user: user._id,
         refreshTokenHash,
-        ip: req.ip,
-        userAgent: req.headers['user-agent']
+        ip: req.ip || '127.0.0.1',
+        userAgent: req.headers['user-agent'] || 'unknown'
     });
     const accessToken = jwt.sign(
         { id: user._id, sessionId: session._id },

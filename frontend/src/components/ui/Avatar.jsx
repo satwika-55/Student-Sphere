@@ -1,9 +1,10 @@
 import { cn } from '../../lib/utils.js'
 
-function initials(name = '') {
-  return name
+function initials(name) {
+  const safeName = typeof name === 'string' ? name : String(name ?? '')
+  return safeName
     .split(/[\s_]+/)
-    .map((part) => part[0])
+    .map((part) => part ? part[0] : '')
     .join('')
     .slice(0, 2)
     .toUpperCase()
@@ -17,8 +18,9 @@ const palette = [
 ]
 
 function colorFromName(name) {
+  const safeName = typeof name === 'string' ? name : String(name ?? '')
   let hash = 0
-  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash)
+  for (let i = 0; i < safeName.length; i++) hash = safeName.charCodeAt(i) + ((hash << 5) - hash)
   return palette[Math.abs(hash) % palette.length]
 }
 

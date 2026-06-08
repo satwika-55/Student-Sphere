@@ -19,7 +19,7 @@ function Register() {
     try {
       const { data } = await registerUser({ username, email, password })
       setAuth(data.accessToken, data.user)
-      navigate('/', { replace: true })
+      navigate('/posts', { replace: true })
     } catch (err) {
       setError(
         err.response?.data?.message ??
@@ -31,21 +31,33 @@ function Register() {
   }
 
   return (
-    <div className="min-h-svh w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
-      <div className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-md flex-col justify-center sm:min-h-[calc(100svh-6rem)]">
+    <div className="min-h-svh w-full bg-[#050506] relative overflow-hidden flex items-center justify-center px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+      {/* Glow Effects */}
+      <div
+        className="pointer-events-none fixed inset-0 opacity-[0.35]"
+        aria-hidden
+        style={{
+          backgroundImage: `
+            radial-gradient(circle 600px at 50% -100px, rgba(255, 107, 74, 0.15), transparent),
+            radial-gradient(circle 600px at 50% 110%, rgba(255, 107, 74, 0.05), transparent)
+          `,
+        }}
+      />
+
+      <div className="mx-auto flex w-full max-w-md flex-col justify-center relative z-10">
         <div className="mb-8 text-center">
-          <p className="text-sm font-medium tracking-widest text-violet-400 uppercase">
+          <p className="text-sm font-medium tracking-widest text-[#ff9470] uppercase">
             StudentSphere
           </p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-50 sm:text-3xl">
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-stone-50 sm:text-3xl">
             Create your account
           </h1>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-stone-400">
             Join the community and start sharing with peers.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-slate-700/80 bg-slate-800/40 p-6 shadow-xl shadow-black/20 backdrop-blur-sm sm:p-8">
+        <div className="rounded-2xl border border-white/[0.08] bg-[#14161c]/45 p-6 shadow-xl shadow-black/40 backdrop-blur-sm sm:p-8">
           {error && (
             <p
               role="alert"
@@ -59,7 +71,7 @@ function Register() {
             <div>
               <label
                 htmlFor="username"
-                className="mb-1.5 block text-sm font-medium text-slate-200"
+                className="mb-1.5 block text-sm font-medium text-stone-300"
               >
                 Username
               </label>
@@ -73,14 +85,14 @@ function Register() {
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="johndoe"
                 disabled={loading}
-                className="w-full rounded-lg border border-slate-600 bg-slate-900/80 px-4 py-2.5 text-slate-100 placeholder:text-slate-500 transition-colors outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/30 disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full rounded-lg border border-white/10 bg-[#0c0d10]/60 px-4 py-2.5 text-stone-100 placeholder:text-stone-600 transition-colors outline-none focus:border-[#ff6b4a] focus:ring-2 focus:ring-[#ff6b4a]/30 disabled:cursor-not-allowed disabled:opacity-60"
               />
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="mb-1.5 block text-sm font-medium text-slate-200"
+                className="mb-1.5 block text-sm font-medium text-stone-300"
               >
                 Email
               </label>
@@ -94,14 +106,14 @@ function Register() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@university.edu"
                 disabled={loading}
-                className="w-full rounded-lg border border-slate-600 bg-slate-900/80 px-4 py-2.5 text-slate-100 placeholder:text-slate-500 transition-colors outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/30 disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full rounded-lg border border-white/10 bg-[#0c0d10]/60 px-4 py-2.5 text-stone-100 placeholder:text-stone-600 transition-colors outline-none focus:border-[#ff6b4a] focus:ring-2 focus:ring-[#ff6b4a]/30 disabled:cursor-not-allowed disabled:opacity-60"
               />
             </div>
 
             <div>
               <label
                 htmlFor="password"
-                className="mb-1.5 block text-sm font-medium text-slate-200"
+                className="mb-1.5 block text-sm font-medium text-stone-300"
               >
                 Password
               </label>
@@ -115,29 +127,29 @@ function Register() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 disabled={loading}
-                className="w-full rounded-lg border border-slate-600 bg-slate-900/80 px-4 py-2.5 text-slate-100 placeholder:text-slate-500 transition-colors outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet-500/30 disabled:cursor-not-allowed disabled:opacity-60"
+                className="w-full rounded-lg border border-white/10 bg-[#0c0d10]/60 px-4 py-2.5 text-stone-100 placeholder:text-stone-600 transition-colors outline-none focus:border-[#ff6b4a] focus:ring-2 focus:ring-[#ff6b4a]/30 disabled:cursor-not-allowed disabled:opacity-60"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 w-full rounded-lg bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-violet-900/30 transition-colors hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-2 focus:ring-offset-slate-900 active:bg-violet-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-2 w-full rounded-lg bg-[#ff6b4a] px-4 py-2.5 text-sm font-semibold text-[#0c0d10] shadow-lg shadow-[#ff6b4a]/20 transition-all hover:brightness-110 active:translate-y-px active:shadow-none focus:outline-none focus:ring-2 focus:ring-[#ff6b4a]/60 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? 'Creating account…' : 'Register'}
             </button>
           </form>
 
-          <p className="mt-4 text-center text-sm text-slate-500">
-            <Link to="/" className="text-violet-400/90 hover:text-violet-300">
-              ← Back to feed
+          <p className="mt-6 text-center text-sm text-stone-500">
+            <Link to="/" className="text-[#ff9470]/90 hover:text-[#ff6b4a] transition-colors">
+              ← Back to Home
             </Link>
           </p>
-          <p className="mt-6 text-center text-sm text-slate-400">
+          <p className="mt-4 text-center text-sm text-stone-400">
             Already have an account?{' '}
             <Link
               to="/login"
-              className="font-medium text-violet-400 transition-colors hover:text-violet-300"
+              className="font-medium text-[#ff9470] transition-colors hover:text-[#ff6b4a]"
             >
               Log in
             </Link>
